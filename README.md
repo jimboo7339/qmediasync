@@ -63,6 +63,10 @@ sudo ./build_and_release.sh -v vx.xx.xx
 
 ![Contributors](https://contrib.rocks/image?repo=qicfan/qmediasync)
 
+## Star
+
+[![Star History Chart](https://api.star-history.com/svg?repos=qicfan/qmediasync&type=Date)](https://star-history.com/#qicfan/qmediasync&Date)
+
 ## 请作者喝杯咖啡
 
 ![请作者喝杯咖啡](http://s.mqfamily.top/alipay_wechat.jpg)
