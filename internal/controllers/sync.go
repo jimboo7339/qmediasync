@@ -15,35 +15,6 @@ func StartSync(c *gin.Context) {
 	c.JSON(http.StatusOK, APIResponse[any]{Code: Success, Message: "同步任务已添加到队列", Data: nil})
 }
 
-// SyncPathWebhook 同步目录webhook接口，通过目录ID触发同步
-func SyncPathWebhook(c *gin.Context) {
-	type syncPathWebhookRequest struct {
-		ID uint `json:"id" form:"id" binding:"required"` // 同步目录ID
-	}
-	var req syncPathWebhookRequest
-	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, APIResponse[any]{Code: BadRequest, Message: "请求参数错误", Data: nil})
-		return
-	}
-
-	syncPath := models.GetSyncPathById(req.ID)
-	if syncPath == nil {
-		c.JSON(http.StatusNotFound, APIResponse[any]{Code: BadRequest, Message: "同步目录不存在", Data: nil})
-		return
-	}
-
-	if err := synccron.AddSyncTask(syncPath.ID, synccron.SyncTaskTypeStrm); err != nil {
-		c.JSON(http.StatusOK, APIResponse[any]{Code: BadRequest, Message: "添加同步任务失败: " + err.Error(), Data: nil})
-		return
-	}
-
-	c.JSON(http.StatusOK, APIResponse[any]{Code: Success, Message: "同步任务已添加到队列", Data: map[string]interface{}{
-		"sync_path_id": syncPath.ID,
-		"remote_path":  syncPath.RemotePath,
-		"source_type":  syncPath.SourceType,
-	}})
-}
-
 func GetSyncRecords(c *gin.Context) {
 	type syncRecordsRequest struct {
 		Page     int `form:"page" json:"page" binding:"omitempty,min=1"`           // 页码，默认1
