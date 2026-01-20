@@ -302,6 +302,7 @@ func setRouter(r *gin.Engine) {
 		c.HTML(200, "index.html", gin.H{})
 	})
 	r.POST("/emby/webhook", controllers.Webhook)
+	r.POST("/sync/webhook", controllers.SyncPathWebhook)
 	r.POST("/api/login", controllers.LoginAction)
 	r.GET("/115/url/*filename", controllers.Get115UrlByPickCode) // 查询115直链 by pickcode 支持iso，路径最后一部分是.扩展名格式
 	r.GET("/115/url", controllers.Get115FileUrl)                 // 查询115直链
